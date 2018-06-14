@@ -1,3 +1,5 @@
+require 'puppet/property/boolean'
+
 Puppet::Type.newtype(:mikrotik_ospf_area_range) do
   apply_to_all
   
@@ -6,7 +8,7 @@ Puppet::Type.newtype(:mikrotik_ospf_area_range) do
     defaultto :present
   end
   
-  newparam(:range) do
+  newparam(:name) do
     desc 'the network prefix of this range'
     isnamevar
   end
@@ -37,6 +39,6 @@ Puppet::Type.newtype(:mikrotik_ospf_area_range) do
   # the 'area' parameter must be set explicitly, not as part of the title.
   # This is exactly how the official 'package' resource works.
   def self.title_patterns
-    [ [ /(.*)/, [ [:range] ] ] ]
+    [ [ /(.*)/, [ [:name] ] ] ]
   end
 end

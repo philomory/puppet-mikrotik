@@ -14,26 +14,26 @@ Puppet::Type.type(:mikrotik_ospf_area_range).provide(:mikrotik_api, :parent => P
   def self.ospfAreaRange(data)
       new(
         :ensure    => :present,
-        :range     => data['range'],
+        :name      => data['range'],
         :area      => data['area'],
         :cost      => data['cost'],
-        :advertise => data['advertise'] == 'yes' ? true : false,
+        :advertise => data['advertise'],
         :comment   => data['comment']
       )
   end
 
   def flush
-    Puppet.debug("Flushing OSPF Area Range #{resource[:range]}/#{resource[:area]}")
-      
+    Puppet.debug("Flushing OSPF Area Range #{resource[:name]}/#{resource[:area]}")
+
     params = {}
-    params["range"]     = resource[:range]
+    params["range"]     = resource[:name]
     params["area"]      = resource[:area]
     params["cost"]      = resource[:cost]
-    params["advertise"] = resource[:advertise] ? 'yes' : 'no'
+    params["advertise"] = resource[:advertise]
     params["comment"]   = resource[:comment] if ! resource[:comment].nil?
 
     lookup = {
-      "range" => resource[:range],
+      "range" => resource[:name],
       "area"  => resource[:area]
     }
     
