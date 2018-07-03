@@ -38,7 +38,7 @@ Puppet::Type.type(:mikrotik_interface_ppp_server_binding).provide(:mikrotik_api,
       params["disabled"] = 'no'
     end
 
-    attributes = %i{name user comment}
+    attributes = [:name, :user, :comment]
     attributes.each do |attrib|
       params[attrib] = resource[attrib] unless resource[attrib].nil?  
     end
