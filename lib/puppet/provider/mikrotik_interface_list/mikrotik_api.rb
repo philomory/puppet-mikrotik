@@ -97,7 +97,7 @@ Puppet::Type.type(:mikrotik_interface_list).provide(:mikrotik_api, :parent => Pu
     if @property_flush.empty?
       Puppet.debug("Updating #{members_path}")
       
-      if resouce[:manage_members]
+      if resource[:manage_members]
         # Create members
         (@property_hash[members_param_name] - @original_values[members_param_name]).each do |item|
           Puppet.debug("Create member #{item} in #{members_path}")
