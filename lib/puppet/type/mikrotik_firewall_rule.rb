@@ -344,6 +344,7 @@ Puppet::Type.newtype(:mikrotik_firewall_rule) do
   end
 
   newproperty(:passthrough) do #passthrough
+    desc 'Whether to pass control on to the next rule after this one matches (note that puppet cannot currently control rule ordering)'
     newvalues(:true,:false)
   end
 end
