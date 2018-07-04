@@ -125,7 +125,8 @@ Puppet::Type.type(:mikrotik_firewall_rule).provide(:mikrotik_api, :parent => Pup
         :route_dst                 => rule['route-dst'],
         :sniff_id                  => rule['sniff-id'],
         :sniff_target              => rule['sniff-target'],
-        :sniff_target_port         => rule['sniff-target-port']
+        :sniff_target_port         => rule['sniff-target-port'],
+        :passthrough               => rule['passthrough'],
       )
     end
   end
@@ -241,7 +242,8 @@ Puppet::Type.type(:mikrotik_firewall_rule).provide(:mikrotik_api, :parent => Pup
     params["sniff-id"] = resource[:sniff_id] if ! resource[:sniff_id].nil?
     params["sniff-target"] = resource[:sniff_target] if ! resource[:sniff_target].nil?
     params["sniff-target-port"] = resource[:sniff_target_port] if ! resource[:sniff_target_port].nil?
-      
+    params["passthrough"] = resource[:passthrough] if ! resource[:passthrough].nil?
+
     lookup = { "comment" => resource[:name] }
     
     Puppet.debug("Rule: #{params.inspect} - Lookup: #{lookup.inspect}")

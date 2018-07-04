@@ -342,4 +342,8 @@ Puppet::Type.newtype(:mikrotik_firewall_rule) do
   newproperty(:sniff_target_port) do  # sniff-target-port
     desc 'TODO'
   end
+
+  newproperty(:passthrough) do #passthrough
+    newvalues(:true,:false)
+  end
 end
