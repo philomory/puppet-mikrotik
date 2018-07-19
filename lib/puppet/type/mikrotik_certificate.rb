@@ -29,7 +29,7 @@ Puppet::Type.newtype(:mikrotik_certificate) do
   newproperty(:fingerprint) do
     desc 'certificate fingerprint'
     def value
-      if @value.nil?
+      if @value.empty?
         cert = OpenSSL::X509::Certificate.new(resource[:certificate])
         OpenSSL::Digest::SHA256.hexdigest(cert.to_der)
       else
