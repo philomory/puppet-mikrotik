@@ -36,6 +36,7 @@ Puppet::Type.type(:mikrotik_certificate).provide(:mikrotik_api, :parent => Puppe
     cert_filename = "#{resource[:name]}.crt"
     upload_data(resource[:certificate], cert_filename)
     self.class.import('file-name' => cert_filename)
+    cleanup(cert_filename)
 
     if !resource[:private_key].nil?
       key_filename = "#{resource[:name]}.key"
@@ -45,6 +46,7 @@ Puppet::Type.type(:mikrotik_certificate).provide(:mikrotik_api, :parent => Puppe
       else
         self.class.import('file-name': key_filename)
       end
+      cleanup(key_filename)
     end
   end
 
@@ -71,6 +73,11 @@ Puppet::Type.type(:mikrotik_certificate).provide(:mikrotik_api, :parent => Puppe
     path = filename
     Net::SCP.upload!(c.host,c.user,data,path,ssh: {password: c.pass})
     sleep(5)
+  end
+
+  def cleanup(filename)
+    Puppet.debug("Deleting #{filename}")
+    self.class.remove('/file',{ numbers: filename })    
   end
 
 end
