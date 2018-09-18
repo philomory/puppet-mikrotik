@@ -1,5 +1,4 @@
 require 'puppet/property/boolean'
-require 'pry'
 
 Puppet::Type.newtype(:mikrotik_ipsec_policy) do
   apply_to_all

@@ -1,5 +1,4 @@
 require 'puppet/provider/mikrotik_api'
-require 'pry'
 
 Puppet::Type.type(:mikrotik_ipsec_policy).provide(:mikrotik_api, :parent => Puppet::Provider::Mikrotik_Api) do
   confine :feature => :mtik
@@ -25,7 +24,6 @@ Puppet::Type.type(:mikrotik_ipsec_policy).provide(:mikrotik_api, :parent => Pupp
         resources[name].provider = provider
       end
     end
-    binding.pry
   end
 
   def self.ipsecPolicy(data)
