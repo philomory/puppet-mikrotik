@@ -19,7 +19,7 @@ Puppet::Type.newtype(:mikrotik_ipsec_mode_config) do
   newproperty(:comment) do
   end
 
-  newproperty(:split_include) do
+  newproperty(:split_include, :array_matching => :all) do
   end
 
   newproperty(:static_dns) do
