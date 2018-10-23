@@ -1,48 +1,17 @@
 Puppet::Type.newtype(:mikrotik_ppp_secret) do
   apply_to_all
-  
-  ensurable do    
-    newvalue(:present) do
-      provider.create  
-    end
-    
-    newvalue(:absent) do
-      provider.destroy
-    end
-    
-    newvalue(:enabled) do
-      provider.setState(:enabled)      
-    end
 
-    newvalue(:disabled) do
-      provider.setState(:disabled)
-    end
-
-    defaultto :present
-    
-    def retrieve
-      provider.getState
-    end
-    
-    def insync?(is)
-      @should.each { |should| 
-        case should
-          when :present
-            return (provider.getState != :absent)
-          when :absent
-            return (provider.getState == :absent)
-          when :enabled                   
-            return (provider.getState == :enabled)
-          when :disabled                      
-            return (provider.getState == :disabled)       
-        end
-      }      
-    end
-  end
+  ensurable
 
   newparam(:name) do
     desc 'Name of the user'
     isnamevar
+  end
+
+  newparam(:state) do
+    desc "Enabled or disabled"
+    newvalues(:enabled,:disabled)
+    defaultto(:enabled)
   end
 
   newproperty(:password) do
@@ -84,7 +53,7 @@ Puppet::Type.newtype(:mikrotik_ppp_secret) do
   newproperty(:limit_bytes_in) do
     desc 'Maximum amount of bytes user can transmit'
   end
-  
+
   newproperty(:limit_bytes_out) do
     desc 'Maximum amount of bytes user can receive'
   end
