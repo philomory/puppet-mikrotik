@@ -15,9 +15,9 @@ Puppet::Type.type(:mikrotik_ppp_secret).provide(:mikrotik_api, :parent => Puppet
     routes = data['routes'].nil? ? nil : data['routes'].split(',')
 
     if data['disabled'] == 'true'
-      state = :disabled
+      state = 'disabled'
     else
-      state = :enabled
+      state = 'enabled'
     end
 
     new(
