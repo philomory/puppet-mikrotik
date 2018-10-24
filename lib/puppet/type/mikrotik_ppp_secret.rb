@@ -1,17 +1,48 @@
 Puppet::Type.newtype(:mikrotik_ppp_secret) do
   apply_to_all
 
-  ensurable
+  ensurable do
+    newvalue(:present) do
+      provider.create
+    end
+
+    newvalue(:absent) do
+      provider.destroy
+    end
+
+    newvalue(:enabled) do
+      provider.setState(:enabled)
+    end
+
+    newvalue(:disabled) do
+      provider.setState(:disabled)
+    end
+
+    defaultto :present
+
+    def retrieve
+      provider.getState
+    end
+
+    def insync?(is)
+      @should.each { |should|
+        case should
+          when :present
+            return (provider.getState != :absent)
+          when :absent
+            return (provider.getState == :absent)
+          when :enabled
+            return (provider.getState == :enabled)
+          when :disabled
+            return (provider.getState == :disabled)
+        end
+      }
+    end
+  end
 
   newparam(:name) do
     desc 'Name of the user'
     isnamevar
-  end
-
-  newproperty(:state) do
-    desc "Enabled or disabled"
-    newvalues(:enabled,:disabled)
-    defaultto(:enabled)
   end
 
   newproperty(:password) do
