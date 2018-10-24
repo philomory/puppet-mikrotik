@@ -8,7 +8,7 @@ Puppet::Type.newtype(:mikrotik_ppp_secret) do
     isnamevar
   end
 
-  newparam(:state) do
+  newproperty(:state) do
     desc "Enabled or disabled"
     newvalues(:enabled,:disabled)
     defaultto(:enabled)
