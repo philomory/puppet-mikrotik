@@ -15,13 +15,14 @@ Puppet::Type.type(:mikrotik_ppp_secret).provide(:mikrotik_api, :parent => Puppet
     routes = data['routes'].nil? ? nil : data['routes'].split(',')
 
     if data['disabled'] == 'true'
-      state = 'disabled'
+      state = :disabled
     else
-      state = 'enabled'
+      state = :enabled
     end
 
     new(
-      :ensure           => state,
+      :ensure           => :present,
+      :state            => state,
       :name             => data['name'],
       :password         => data['password'],
       :service          => data['service'],
@@ -40,9 +41,9 @@ Puppet::Type.type(:mikrotik_ppp_secret).provide(:mikrotik_api, :parent => Puppet
 
     params = {}
 
-    if @property_hash[:ensure] == :disabled
+    if @property_hash[:state] == :disabled
       params["disabled"] = true
-    elsif @property_hash[:ensure] == :enabled
+    elsif @property_hash[:state] == :enabled
       params["disabled"] = false
     end
 

@@ -20,7 +20,7 @@ Puppet::Type.newtype(:mikrotik_ppp_secret) do
       provider.setState(:disabled)
     end
 
-    defaultto :present
+    defaultto :enabled
 
     def retrieve
       provider.getState
