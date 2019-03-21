@@ -19,11 +19,9 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
     end
 
     def insync?(is)
-      if is.is_a?(Array) and @should.is_a?(Array)
-        is.sort == @should.sort   
-      else
-        is.split(',').sort.join(',') == @should.split(',').sort.join(',')
-      end
+      test_is     =      is.kind_of?(Array) ? is      :      is.split(',').sort
+      test_should = @should.kind_of?(Array) ? @should : @should.split(',').sort
+      test_is == test_should
     end    
   end
   
