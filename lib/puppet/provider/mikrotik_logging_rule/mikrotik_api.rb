@@ -17,13 +17,15 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
     Puppet.debug("Rule is: #{rule}")
     Puppet.debug("Toprics are: #{topics.inspect}")
 
-    new(
+    obj = new(
       :ensure => :present,
       :name   => name,
       :topics => topics,
       :action => rule['action'],
       :prefix => rule['prefix'],
     )
+    Puppet.debug("Resource made: #{obj.to_hash}")
+    obj
   end
 
   def flush
