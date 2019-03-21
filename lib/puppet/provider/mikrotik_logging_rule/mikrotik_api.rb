@@ -15,7 +15,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
     name = topics.join('_') + "_" + rule['action']
     
     Puppet.debug("Rule is: #{rule}")
-    Puppet.debug("Toprics are: #{topics.inspect}")
+    Puppet.debug("Topics are: #{topics.inspect}")
 
     obj = new(
       :ensure => :present,
@@ -24,7 +24,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
       :action => rule['action'],
       :prefix => rule['prefix'],
     )
-    Puppet.debug("Resource made: #{obj.to_hash}")
+    Puppet.debug("Resource made: #{@property_hash}")
     obj
   end
 
