@@ -43,7 +43,7 @@ Puppet::Type.type(:mikrotik_logging_action).provide(:mikrotik_api, :parent => Pu
       if ! resource[:bsd_syslog].nil?
         params["bsd-syslog"] = resource[:bsd_syslog]?"yes":"no"        
       end
-      params["syslog_-facility"] = resource[:syslog_facility] if ! resource[:syslog_facility].nil?
+      params["syslog-facility"] = resource[:syslog_facility] if ! resource[:syslog_facility].nil?
       params["syslog-severity"] = resource[:syslog_severity] if ! resource[:syslog_severity].nil?
     end
     
