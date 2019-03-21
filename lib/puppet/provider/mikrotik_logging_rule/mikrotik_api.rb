@@ -12,14 +12,12 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   
   def self.loggingRule(rule)
     topics = rule['topics'].split(',')
-    name = topics.join('_') + "_" + rule['action']
     
     Puppet.debug("Rule is: #{rule}")
     Puppet.debug("Topics are: #{topics.inspect}")
 
     obj = new(
       :ensure => :present,
-      :name   => name,
       :topics => topics,
       :action => rule['action'],
       :prefix => rule['prefix'],
@@ -29,12 +27,8 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   end
 
   def flush
-    Puppet.debug("Flushing Logging Rule #{resource[:name]}")
-    
-    if resource[:topics].nil? or resource[:action].nil?
-      Puppet.debug("Resource is bad: #{resource.to_hash}")
-      raise "topics and action are required parameters."
-    end      
+    name = resource[:topics].join(',') + "_" + resource[:action]
+    Puppet.debug("Flushing Logging Rule #{name}") 
     
     params = {}
     params["topics"] = resource[:topics].join(',')

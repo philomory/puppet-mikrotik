@@ -6,13 +6,18 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
     defaultto :present
   end
   
-  newparam(:name) do
-    desc 'Mikrotik does not have a title ID for this object. Restricted to topic1,topic2_action'
-    isnamevar
-  end
-  
   newproperty(:topics, :array_matching => :all) do
     desc 'The topics that will be filtered by this rule.'
+    isnamevar
+
+    munge do |topics|
+      case topics
+      when String
+        topics.split(',')
+      when Array
+        topics
+      end
+    end
 
     def insync?(is)
       if is.is_a?(Array) and @should.is_a?(Array)
@@ -25,9 +30,22 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
   
   newproperty(:action) do
     desc 'The action that the logs will be sent to.'
+    isnamevar
   end
   
   newproperty(:prefix) do
     desc 'Prefix the logs by this string.'
+  end
+
+  def title_patterns
+    [
+      [
+        /([a-zA-Z0-9,-]+)_(\w+)/,
+        [
+          [:topics],
+          [:action]
+        ]
+      ]
+    ]
   end
 end
