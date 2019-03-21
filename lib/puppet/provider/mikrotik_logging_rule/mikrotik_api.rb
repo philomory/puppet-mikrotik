@@ -18,7 +18,8 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
       :ensure => :present,
       :name   => name,
       :topics => topics,
-      :action => rule['action']
+      :action => rule['action'],
+      :prefix => rule['prefix'],
     )
   end
 
@@ -26,12 +27,14 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
     Puppet.debug("Flushing Logging Rule #{resource[:name]}")
     
     if resource[:topics].nil? or resource[:action].nil?
+      Puppet.debug("Resource is bad: #{resource.inspect}")
       raise "topics and action are required parameters."
     end      
     
     params = {}
     params["topics"] = resource[:topics].join(',')
-    params["action"] = resource[:action] 
+    params["action"] = resource[:action]
+    params["prefix"] = resource[:prefix] unless resource[:prefix].nil?
     
     lookup = { 
       "topics" => resource[:topics].join(','),
