@@ -24,7 +24,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
       :action => rule['action'],
       :prefix => rule['prefix'],
     )
-    Puppet.debug("Resource made: #{obj.instance_variable_get(:@property_hash:)}")
+    Puppet.debug("Resource made: #{obj.instance_variable_get(:@property_hash)}")
     obj
   end
 
