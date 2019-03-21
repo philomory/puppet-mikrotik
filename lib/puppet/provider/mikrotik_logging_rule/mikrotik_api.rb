@@ -11,7 +11,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   end
   
   def self.loggingRule(rule)
-    topics = rule['topics'].split(',').sort.join(',')
+    topics = rule['topics']
     name = topics + "_" + rule['action']
 
 
