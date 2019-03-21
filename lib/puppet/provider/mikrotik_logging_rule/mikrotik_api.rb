@@ -15,6 +15,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
     name = topics.join('_') + "_" + rule['action']
     
     Puppet.debug("Rule is: #{rule}")
+    Puppet.debug("Toprics are: #{topics.inspect}")
 
     new(
       :ensure => :present,
