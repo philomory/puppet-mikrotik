@@ -158,8 +158,9 @@ class Puppet::Provider::Mikrotik_Api < Puppet::Provider
       Puppet.debug("Deleting #{path}")
       
       id_list = Puppet::Provider::Mikrotik_Api::lookup_id(path, lookup)
+      Puppet.debug("Found #{id_list.inspect} to remove.")
       id_list.each do |id|
-        id_lookup = { ".id" => id } 
+        id_lookup = { ".id" => id }
         result = Puppet::Provider::Mikrotik_Api::remove(path, id_lookup)
       end      
     end      
@@ -169,6 +170,7 @@ class Puppet::Provider::Mikrotik_Api < Puppet::Provider
       Puppet.debug("Updating #{path}")
         
       id_list = Puppet::Provider::Mikrotik_Api::lookup_id(path, lookup)
+      Puppet.debug("Found #{id_list.inspect} to update.")
       id_list.each do |id|
         params = params.merge({ ".id" => id })
         result = Puppet::Provider::Mikrotik_Api::set(path, params)
