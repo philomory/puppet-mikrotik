@@ -22,7 +22,7 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
       if is.is_a?(Array) and @should.is_a?(Array)
         is.sort == @should.sort   
       else
-        is == @should
+        is.split(',').sort.join(',') == @should.split(',').sort.join(',')
       end
     end    
   end
