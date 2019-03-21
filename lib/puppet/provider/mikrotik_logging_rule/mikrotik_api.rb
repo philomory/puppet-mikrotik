@@ -11,12 +11,12 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   end
   
   def self.loggingRule(rule)
-    topics = rule['topics'].split(',')
-    name = topics.join(',') + "_" + rule['action']
+    topics = rule['topics'].split(',').sort.join(',')
+    name = topics + "_" + rule['action']
 
 
     Puppet.debug("Rule is: #{rule}")
-    Puppet.debug("Topics are: #{topics.inspect}")
+    Puppet.debug("Topics are: #{topics}")
 
     obj = new(
       :ensure => :present,
@@ -30,16 +30,16 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   end
 
   def flush
-    name = resource[:topics].join(',') + "_" + resource[:action]
+    name = resource[:topics] + "_" + resource[:action]
     Puppet.debug("Flushing Logging Rule #{name}") 
     
     params = {}
-    params["topics"] = resource[:topics].join(',')
+    params["topics"] = resource[:topics] unless resource[:topics].nil?
     params["action"] = resource[:action]
     params["prefix"] = resource[:prefix] unless resource[:prefix].nil?
     
     lookup = { 
-      "topics" => resource[:topics].join(','),
+      "topics" => resource[:topics],
       "action" => resource[:action]
     }
     

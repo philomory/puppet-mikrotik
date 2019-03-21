@@ -10,17 +10,12 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
     desc "Dummy parameter, doesn't do anything"
   end
 
-  newproperty(:topics, :array_matching => :all) do
-    desc 'The topics that will be filtered by this rule.'
+  newproperty(:topics) do
+    desc 'A comma-separated list of topics that will be filtered by this rule.'
     isnamevar
 
     munge do |topics|
-      case topics
-      when String
-        topics.split(',')
-      when Array
-        topics
-      end
+      topics.split(',').sort.join(',')
     end
 
     def insync?(is)
