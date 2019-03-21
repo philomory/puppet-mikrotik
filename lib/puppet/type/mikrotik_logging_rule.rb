@@ -5,7 +5,11 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
     defaultvalues
     defaultto :present
   end
-  
+
+  newparam(:name) do
+    desc "Dummy parameter, doesn't do anything"
+  end
+
   newproperty(:topics, :array_matching => :all) do
     desc 'The topics that will be filtered by this rule.'
     isnamevar
