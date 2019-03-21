@@ -30,11 +30,16 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
   end
 
   def flush
-    name = resource[:topics] + "_" + resource[:action]
+    if resource[:name]
+      topics, action = resource[:name].split('_')
+      resource[:topics] ||= topics
+      resource[:action] ||= action
+    end
+    name = resource[:name] || resource[:topics] + "_" + resource[:action]
     Puppet.debug("Flushing Logging Rule #{name}") 
     
     params = {}
-    params["topics"] = resource[:topics] unless resource[:topics].nil?
+    params["topics"] = resource[:topics]
     params["action"] = resource[:action]
     params["prefix"] = resource[:prefix] unless resource[:prefix].nil?
     
