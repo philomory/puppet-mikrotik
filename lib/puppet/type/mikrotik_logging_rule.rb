@@ -40,7 +40,7 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
   def title_patterns
     [
       [
-        /([a-zA-Z0-9,-]+)_(\w+)/,
+        /([!a-zA-Z0-9,-]+)_(\w+)/,
         [
           [:topics],
           [:action]
