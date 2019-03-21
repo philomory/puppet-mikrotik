@@ -27,7 +27,7 @@ Puppet::Type.type(:mikrotik_logging_rule).provide(:mikrotik_api, :parent => Pupp
     Puppet.debug("Flushing Logging Rule #{resource[:name]}")
     
     if resource[:topics].nil? or resource[:action].nil?
-      Puppet.debug("Resource is bad: #{resource.to_hash")
+      Puppet.debug("Resource is bad: #{resource.to_hash}")
       raise "topics and action are required parameters."
     end      
     
