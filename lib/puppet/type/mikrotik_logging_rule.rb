@@ -21,7 +21,9 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
     def insync?(is)
       test_is     =      is.kind_of?(Array) ? is      :      is.split(',')
       test_should = @should.kind_of?(Array) ? @should : @should.split(',')
-      test_is.sort == test_should.sort
+      result = (test_is.sort == test_should.sort)
+      Puppet.debug("Comparing #{test_is.sort.inspect} to #{test_should.sort.inspect}: #{result}"
+      result
     end    
   end
   
