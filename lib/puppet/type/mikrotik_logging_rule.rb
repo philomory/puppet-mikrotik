@@ -12,19 +12,7 @@ Puppet::Type.newtype(:mikrotik_logging_rule) do
 
   newproperty(:topics) do
     desc 'A comma-separated list of topics that will be filtered by this rule.'
-    isnamevar
-
-    munge do |topics|
-      topics.split(',').sort.join(',')
-    end
-
-    def insync?(is)
-      test_is = is.split(',')
-      test_should = (@should.kind_of?(Array) ? @should[0] : @should).split(',')
-      result = (test_is.sort == test_should.sort)
-      Puppet.debug("Comparing #{test_is.sort.inspect} to #{test_should.sort.inspect}: #{result}")
-      result
-    end    
+    isnamevar 
   end
   
   newproperty(:action) do
