@@ -1,8 +1,8 @@
 require 'puppet/provider/mikrotik_api'
-require 'net/scp'
 
 Puppet::Type.type(:mikrotik_file).provide(:mikrotik_api, :parent => Puppet::Provider::Mikrotik_Api) do
   confine :feature => :mtik
+  confine :feature => :net_scp
 
   mk_resource_methods
 
