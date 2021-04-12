@@ -7,6 +7,7 @@ class Puppet::Util::NetworkDevice::Mikrotik::Device
   attr_accessor :url, :transport
 
   def initialize(url, options = {})
+    @options = options
     @autoloader = Puppet::Util::Autoload.new(
       self,
       'puppet/util/network_device/transport'
@@ -19,6 +20,6 @@ class Puppet::Util::NetworkDevice::Mikrotik::Device
   def facts
     @facts ||= Puppet::Util::NetworkDevice::Mikrotik::Facts.new(@transport)
 
-    @facts.retrieve
+    @facts.retrieve(@options[:include_ec2_metadata])
   end
 end
